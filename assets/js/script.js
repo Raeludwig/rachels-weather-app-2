@@ -2,6 +2,7 @@ var APIKey = "f4cc82078e0999601d888c5956e645ef";
 var city = document.querySelector("#city-selector");
 var submitBtn = document.querySelector('button');
 var fiveDayEl = document.querySelector('.five-day')
+var unitIsFarenheit=true;
 
 // fetch(queryURL);
 
@@ -43,6 +44,13 @@ function renderFiveDay(weather) {
         var cityTemp = document.createElement('h3')
         card.setAttribute("class", "card")
         cityTemp.textContent = `temp: ${weather.list[i].main.temp}`
+// var windSpeed=document.createElement('h3')
+// windSpeed.textContent = 'windSpeed: ${weather.list[i].wind.speed}'
+var cityHumidity = document.querySelector('#humidity')
+$("#humidity").text(today.humidity);
+
+
+
         fiveDayEl.appendChild(card)
         card.append(cityTemp)
 
