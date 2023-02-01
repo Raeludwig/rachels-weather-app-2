@@ -2,7 +2,8 @@ var APIKey = "f4cc82078e0999601d888c5956e645ef";
 var city = document.querySelector("#city-selector");
 var submitBtn = document.querySelector('button');
 var fiveDayEl = document.querySelector('.five-day')
-var unitIsFarenheit=true;
+var current=document.querySelector(".current")
+var unitIsFarenheit = true;
 
 // fetch(queryURL);
 
@@ -11,19 +12,34 @@ var unitIsFarenheit=true;
 // TODO: is the following link what I need to put in for the option to search for more than just a city?
 https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
 
-function weatherSearch() {
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey;
 
+
+// fetch(currentQueryURL) = "http://api.openweathermap.org/data/2.5/weather?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
+
+var currentQueryURL= document.querySelector(".current")
+
+
+
+
+function weatherSearch() {
+    //forecast
+    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
+
+   
     fetch(queryURL)
         .then(response => response.json())
         .then(data => {
             console.log(city.value)
             renderFiveDay(data)
+            
         })
     saveHistory()
 
 }
 
+
+
+//save to local storage
 function saveHistory() {
     var cityHistory = JSON.parse(localStorage.getItem('history')) || []
     cityHistory.push(city.value)
@@ -34,12 +50,8 @@ function saveHistory() {
 
 }
 
-//converts temp
-function temperatureConverter(valNum) {
-    valNum = parseFloat(valNum);
-    document.getElementById("temp").innerHTML=((valNum-273.15)*1.8)+32;
-  }
 
+//render the 5 day forecast
 function renderFiveDay(weather) {
     console.log(weather)
     for (var i = 0; i < weather.list.length; i = i + 8) {
@@ -47,22 +59,37 @@ function renderFiveDay(weather) {
         var card = document.createElement('div')
         //shows the temp
         var cityTemp = document.createElement('h3')
-         cityTemp.textContent = `temp: ${weather.list[i].main.temp}`
-         //shows the windspeed
-var cityWindSpeed = document.createElement('h3')
-cityWindSpeed.textContent= `wind speed: ${weather.list[i].wind.speed}`
-//shows the humidity
-var cityHumidity = document.createElement('h3')
-cityHumidity.textContent= `humidity: ${weather.list[i].main.humidity}%`
-//shows condition
-// var cityCondition = document.createElement('h3')
-// cityCondition.textContent= `conditions: ${weather.list[i].weather.[0].main}`
-//shows icon
+        cityTemp.textContent = `Temp: ${weather.list[i].main.temp} °F`
+        //shows the windspeed
+        var cityWindSpeed = document.createElement('h3')
+        cityWindSpeed.textContent = `Wind speed: ${weather.list[i].wind.speed} mph`
+        //shows the humidity
+        var cityHumidity = document.createElement('h3')
+        cityHumidity.textContent = `Humidity: ${weather.list[i].main.humidity}%`
+        //shows condition-still not working
+        var cityCondition = document.createElement('h3')
+        cityCondition.textContent= `conditions: ${weather.list[i].weather.array}`
+       
+        // $(document).ready(function(){
+        //     $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
+        //     function(result){
+        //         alert("Weather: "+ result.list[0].weather[0].description);
+        //         });
+        //     });
+
+ 
+        //shows icon
+
+        //shows date
+        // var cityDate=document.createElement('h3')
+        // cityDate.textContent=`Date: $('#currentDay').text(today.format('dddd, MMMM D')); `
+        // const dayjs = require('dayjs')
+        // //import dayjs from 'dayjs' // ES 2015
+        // dayjs().format()
 
 
 
-
-card.setAttribute("class", "card")
+        card.setAttribute("class", "card")
         fiveDayEl.appendChild(card)
         card.append(cityTemp)
         card.append(cityHumidity)
@@ -70,35 +97,9 @@ card.setAttribute("class", "card")
         // card.append(cityCondition)
 
 
-
-
-
-
-        // .then(function (response) {
-        //     console.log(response)
-        //     //to avoid repeating city information on button click 
-        //     $(".cityList").empty()
-        //     $("#days").empty()
-           
-        //     var cityMain1 = $("<div col-12>").append($("<p><h2>" + response.name + ' (' + currentDate + ')' + "</h2><p>"));
-        //     var image = $('<img class="imgsize">').attr('src', 'http://openweathermap.org/img/w/' + response.weather[0].icon + '.png');        
-        //     var degreeMain = $('<p>').text('Temperature : ' + response.main.temp + ' °F ');
-        //     var humidityMain = $('<p>').text('Humidity : ' + response.main.humidity + '%');
-        //     var windMain = $('<p>').text('Wind Speed : ' + response.wind.speed + 'MPH');       
-        //     var uvIndexcoord = '&lat=' + response.coord.lat + '&lon=' + response.coord.lon;
-        //     var cityId = response.id;
-    
-        //     displayUVindex(uvIndexcoord);
-        //     displayForecast(cityId);
-    
-        //     cityMain1.append(image).append(degreeMain).append(humidityMain).append(windMain);
-        //     $('#cityList').empty();
-        //     $('#cityList').append(cityMain1);
-        // });
     }
 
 }
-
 
 
 
