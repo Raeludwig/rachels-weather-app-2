@@ -4,6 +4,9 @@ var submitBtn = document.querySelector('button');
 var fiveDayEl = document.querySelector('.five-day')
 var current=document.querySelector(".current")
 var unitIsFarenheit = true;
+
+var today = dayjs();
+$('#currentDay').text(today.format('dddd, MMMM D'));
 // var searchHistroy = docment.querySelector('.search-history')
 
 // fetch(queryURL);
@@ -71,6 +74,7 @@ for (i = 0; i < searchHistory.length; i++) {
 //render the 5 day forecast
 function renderFiveDay(weather) {
     console.log(weather)
+    fiveDayEl.innerHTML="";
     for (var i = 0; i < weather.list.length; i = i + 8) {
         console.log(weather.list[i])
         var card = document.createElement('div')
@@ -87,10 +91,14 @@ function renderFiveDay(weather) {
         var cityCondition = document.createElement('h3')
         cityCondition.textContent= `conditions: ${weather.list[i].weather[0].description}`
         // shows the icon
-        var icon = document.createElement('h3')
-        icon.textContent= `icon: ${weather.list[i].weather[0].icon}`
+        var icon = document.createElement('img')
+        icon.src= `https://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}.png`
    
+//time
+var currHour = dayjs().hour();
 
+
+//calling the changes to the div
         card.setAttribute("class", "card")
         fiveDayEl.appendChild(card)
         card.append(cityTemp)
@@ -98,6 +106,7 @@ function renderFiveDay(weather) {
         card.append(cityWindSpeed)
         card.append(cityCondition)
         card.append(icon)
+
     }
 
 }
