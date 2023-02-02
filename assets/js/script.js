@@ -68,8 +68,15 @@ function renderFiveDay(weather) {
         cityHumidity.textContent = `Humidity: ${weather.list[i].main.humidity}%`
         //shows condition-still not working
         var cityCondition = document.createElement('h3')
-        cityCondition.textContent= `conditions: ${weather.list[i].weather.array}`
-       
+        cityCondition.textContent= `conditions: ${weather.list[i].weather[0].description}`
+        // shows the icon
+        var icon = document.createElement('h3')
+        cityCondition.textContent= `icon: ${weather.list[i].weather[0].icon}`
+
+
+
+      
+
         // $(document).ready(function(){
         //     $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
         //     function(result){
@@ -94,7 +101,8 @@ function renderFiveDay(weather) {
         card.append(cityTemp)
         card.append(cityHumidity)
         card.append(cityWindSpeed)
-        // card.append(cityCondition)
+        card.append(cityCondition)
+      card.append(icon)
 
 
     }
