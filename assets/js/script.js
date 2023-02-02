@@ -24,7 +24,7 @@ var currentQueryURL= document.querySelector(".current")
 
 function weatherSearch() {
     //forecast
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
+    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial" + "&iconSet=icons1";
 
    
     fetch(queryURL)
@@ -89,9 +89,7 @@ function renderFiveDay(weather) {
         // shows the icon
         var icon = document.createElement('h3')
         icon.textContent= `icon: ${weather.list[i].weather[0].icon}`
-
-
-
+   
 
         card.setAttribute("class", "card")
         fiveDayEl.appendChild(card)
@@ -106,11 +104,8 @@ function renderFiveDay(weather) {
 
 
 
-
-
-
-
 submitBtn.addEventListener('click', weatherSearch);
+
 
 
 
