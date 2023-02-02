@@ -4,6 +4,7 @@ var submitBtn = document.querySelector('button');
 var fiveDayEl = document.querySelector('.five-day')
 var current=document.querySelector(".current")
 var unitIsFarenheit = true;
+// var searchHistroy = docment.querySelector('.search-history')
 
 // fetch(queryURL);
 
@@ -42,9 +43,25 @@ function weatherSearch() {
 //save to local storage
 function saveHistory() {
     var cityHistory = JSON.parse(localStorage.getItem('history')) || []
+    var searchHistory = JSON.parse(localStorage.getItem('history')) || []
     cityHistory.push(city.value)
     console.log(cityHistory)
 
+var savedCities= $('#saved-cities')
+for (i = 0; i < searchHistory.length; i++) {
+    var cityLi = searchHistory[i];
+    console.log(cityLi);
+    var li = $("<li>").addClass("info");
+    li.text(cityLi);
+    li.attr("data-index", i);
+
+   // var button = document.createElement("button");
+   // button.textContent = "Check Weather";
+
+   // li.appendChild(button);
+    savedCities.append(li);
+    console.log(savedCities);
+  }
 
     localStorage.setItem('history', JSON.stringify(cityHistory))
 
@@ -71,28 +88,8 @@ function renderFiveDay(weather) {
         cityCondition.textContent= `conditions: ${weather.list[i].weather[0].description}`
         // shows the icon
         var icon = document.createElement('h3')
-        cityCondition.textContent= `icon: ${weather.list[i].weather[0].icon}`
+        icon.textContent= `icon: ${weather.list[i].weather[0].icon}`
 
-
-
-      
-
-        // $(document).ready(function(){
-        //     $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=" + city.value + "&appid=" + APIKey + "&units=imperial";
-        //     function(result){
-        //         alert("Weather: "+ result.list[0].weather[0].description);
-        //         });
-        //     });
-
- 
-        //shows icon
-
-        //shows date
-        // var cityDate=document.createElement('h3')
-        // cityDate.textContent=`Date: $('#currentDay').text(today.format('dddd, MMMM D')); `
-        // const dayjs = require('dayjs')
-        // //import dayjs from 'dayjs' // ES 2015
-        // dayjs().format()
 
 
 
@@ -102,9 +99,7 @@ function renderFiveDay(weather) {
         card.append(cityHumidity)
         card.append(cityWindSpeed)
         card.append(cityCondition)
-      card.append(icon)
-
-
+        card.append(icon)
     }
 
 }
